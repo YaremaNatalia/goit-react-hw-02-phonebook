@@ -1,5 +1,4 @@
 .contactList {
-  padding: 10px;
   display: flex;
   flex-direction: column;
 }
@@ -11,7 +10,6 @@
 }
 
 .contactName {
-  /* margin-right: 10px; */
   font-weight: bold;
 }
 
