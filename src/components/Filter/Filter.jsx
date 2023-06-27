@@ -11,7 +11,6 @@ export const Filter = ({ filter, onFilterChange }) => {
       <input
         className={css.formInput}
         type="text"
-        // pattern="^[a-zA-Zа-яА-Я]+(([' \-][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
         title="Filter using letters, digits, apostrophe, dash and spaces, and can start with +."
         required
         value={filter}

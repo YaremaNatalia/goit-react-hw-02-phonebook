@@ -11,27 +11,23 @@ export class App extends React.Component {
   };
 
   onAddContact = contactData => {
-    const { name } = contactData;
+    const { name, number } = contactData;
     const { contacts } = this.state;
-
-    // Перевірка наявності контакту
 
     const isDuplicateName = contacts.some(
       contact =>
-        String(contact.name).toLowerCase() === String(name).toLowerCase()
+        contact.name.toLowerCase() === name.toLowerCase() ||
+        contact.number === number
     );
 
     if (isDuplicateName) {
-      Notiflix.Notify.failure(`${name} is already in contacts!`);
-    } else {
-      this.setState(prevState => ({
-        contacts: [...prevState.contacts, contactData],
-      }));
-
-      //     this.setState({
-      //  contacts: [...this.state.contacts, contactData],
-      // });
+      return Notiflix.Notify.failure(
+        `${name} or ${number} is already in contacts!`
+      );
     }
+    this.setState(prevState => ({
+      contacts: [...prevState.contacts, contactData],
+    }));
   };
 
   onRemoveContact = contactId => {
@@ -41,12 +37,21 @@ export class App extends React.Component {
     });
   };
 
-  handleFilterChange = event => {
+  onFilterChange = event => {
     this.setState({
       filter: event.target.value,
     });
   };
 
+  filteredContacts = () => {
+    const { filter, contacts } = this.state;
+
+    return contacts.filter(
+      contact =>
+        contact.name.toLowerCase().includes(filter.toLowerCase()) ||
+        contact.number.includes(filter)
+    );
+  };
   render() {
     return (
       <div
@@ -65,11 +70,10 @@ export class App extends React.Component {
           <h2>Contacts</h2>
           <Filter
             filter={this.state.filter}
-            onFilterChange={this.handleFilterChange}
+            onFilterChange={this.onFilterChange}
           />
           <ContactList
-            contacts={this.state.contacts}
-            filter={this.state.filter}
+            contacts={this.filteredContacts()}
             onRemoveContact={this.onRemoveContact}
           />
         </div>

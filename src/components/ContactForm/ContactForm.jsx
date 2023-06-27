@@ -17,7 +17,7 @@ export class ContactForm extends React.Component {
     event.preventDefault();
     const contactData = {
       name: this.state.name,
-      number: Number.parseInt(this.state.number.replace(/[\s()-]+/g, '')),
+      number: this.state.number.replace(/[\s()-]+/g, ''),
       id: nanoid(),
     };
     this.props.onAddContact(contactData);
@@ -37,7 +37,6 @@ export class ContactForm extends React.Component {
             type="text"
             name="name"
             pattern="^[a-zA-Zа-яА-Я]+(([' \-][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-            
             title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
             required
             value={this.state.name}
